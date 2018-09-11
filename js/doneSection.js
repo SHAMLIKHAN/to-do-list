@@ -1,16 +1,16 @@
-function inprogressNewTask(id){
-    console.log("@ inprogress Section!!!");
+function doneNewTask(id){
+    console.log("@ done Section!!!");
     var obj = taskList[id];
     var div = document.createElement("div");
     div.innerHTML = obj.taskName;
     div.id = id;
-    div.onclick = viewProg;
-    document.getElementById("inprogress").appendChild(div);
+    div.onclick = taskDetails;
+    document.getElementById("done").appendChild(div);
 }
-function viewProg(){
+function taskDetails(){
     var id = this.id;
     var obj = taskList[id];
-    console.log("Assignment with id "+id+" is clicked to view progress!");
+    console.log("Assignment with id "+id+" is clicked to view details!");
     var modalDiv = document.getElementById("modalDiv");
         var div = document.createElement("div");
         div.id = "modalInnerDiv";
@@ -33,30 +33,12 @@ function viewProg(){
             var dt = getDateTime(obj.createdOn);
             var createdOn = document.createTextNode("Created on: "+dt);
             timePara.appendChild(createdOn);
-            var btnFinish = document.createElement("input");
-            btnFinish.onclick = finishTask;
-            btnFinish.id = id+"btnFinish";
-            btnFinish.type = "button";
-            btnFinish.value = "Assign Work as Finished!";
         div.appendChild(span);
         div.appendChild(namePara);
         div.appendChild(descPara);
         div.appendChild(assignPara);
         div.appendChild(prioPara);
         div.appendChild(timePara);
-        div.appendChild(btnFinish);
     modalDiv.appendChild(div);
     modalDiv.style.display = "block";
-}
-function finishTask(){
-    var id = (this.id).charAt(0);
-    closeModal();
-
-    var div = document.getElementById(id);
-    if(div){
-        div.parentNode.removeChild(div);
-    }
-    taskList[id].status = "done";
-    console.log("Status of the assignment with id "+id+" is changed to 'done'");
-    doneNewTask(id);  /* Navigated to next js page */
 }
