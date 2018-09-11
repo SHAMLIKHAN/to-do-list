@@ -86,8 +86,7 @@ function beginTask(){
     }
     taskList[id].status = "inprogress";
     console.log("Status of the assignment with id "+id+" is changed to 'inprogress'");
-    /*inprogressNewTask(id);    Navigated to next js page */
-    alert("Navigated to inprogress Section!");
+    inprogressNewTask(id);    /* Navigated to next js page */
 }
 function editableDiv(id){
     var obj = taskList[id];
