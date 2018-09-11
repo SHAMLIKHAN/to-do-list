@@ -60,7 +60,7 @@ function submitTask(){
     var taskName = document.getElementById("taskName").value;
     var taskDesc = document.getElementById("descName").value;
     var person = document.getElementById("assignName").value;
-    var taskPrio = document.getElementById("prioName").value;
+    var taskPrio = parseInt(document.getElementById("prioName").value);
     var flag = processForm(taskName,taskDesc,person);
     if(flag){
         var date = new Date();
@@ -71,6 +71,7 @@ function submitTask(){
             taskAssign:person,
             taskPrio:taskPrio,
             createdOn:time,
+            finishedOn:"Not Finished!",
             status:"todo"
         }
         if(div){

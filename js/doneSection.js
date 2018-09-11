@@ -30,15 +30,20 @@ function taskDetails(){
             var taskPrio = document.createTextNode("Priority: "+obj.taskPrio);
             prioPara.appendChild(taskPrio);
             var timePara = document.createElement("p");
-            var dt = getDateTime(obj.createdOn);
-            var createdOn = document.createTextNode("Created on: "+dt);
+            var dtCreated = getDateTime(obj.createdOn);
+            var createdOn = document.createTextNode("Created on: "+dtCreated);
             timePara.appendChild(createdOn);
+            var timeFinishedPara = document.createElement("p");
+            var dtFinished = getDateTime(obj.finishedOn);
+            var finishedOn = document.createTextNode("Finished on: "+dtFinished);
+            timeFinishedPara.appendChild(finishedOn);
         div.appendChild(span);
         div.appendChild(namePara);
         div.appendChild(descPara);
         div.appendChild(assignPara);
         div.appendChild(prioPara);
         div.appendChild(timePara);
+        div.appendChild(timeFinishedPara);
     modalDiv.appendChild(div);
     modalDiv.style.display = "block";
 }

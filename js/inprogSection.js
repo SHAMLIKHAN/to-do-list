@@ -56,7 +56,10 @@ function finishTask(){
     if(div){
         div.parentNode.removeChild(div);
     }
+    var date = new Date();
+    var time = formatedTime(date);
     taskList[id].status = "done";
+    taskList[id].finishedOn = time;
     console.log("Status of the assignment with id "+id+" is changed to 'done'");
     doneNewTask(id);  /* Navigated to next js page */
 }

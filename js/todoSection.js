@@ -1,13 +1,35 @@
 function todoNewtask(id){
     console.log("@ todo Section!!!");
     var obj = taskList[id];
+    var append;
 
     var div = document.createElement("div");
     div.innerHTML = obj.taskName;
     div.onclick = viewDiv;
     div.id = id;
-
-    document.getElementById("todo").appendChild(div);
+    var divCount = document.getElementById("todo").childElementCount;
+    if(divCount==1){
+        document.getElementById("todo").appendChild(div);
+    }
+    /* Sorting based on Priority */
+    else{
+        append = false;
+        var pos = document.getElementById("todoHead").nextElementSibling.id;
+        var current = document.getElementById(pos);
+        while(taskList[pos].taskPrio < taskList[id].taskPrio){
+            if(document.getElementById(pos).nextElementSibling==null){
+                document.getElementById("todo").appendChild(div);
+                append = true;
+                break;
+            }
+            pos = document.getElementById(pos).nextElementSibling.id;
+            current = document.getElementById(pos);
+        }
+        if(append===false){
+            document.getElementById("todo").insertBefore(div,current);
+        }
+    }
+    /* Sorting ends here! */
 }
 function viewDiv(){
     var id = this.id;
@@ -107,7 +129,7 @@ function editableDiv(id){
             var assignName = document.createElement("input");
             assignName.type="text";
             assignName.id = "re-assignName";
-            assignName.defaultValue = "ShamliKhan";
+            assignName.defaultValue = obj.taskAssign;
 
             var prioLabel = document.createElement("label");
             var prioLabelName = document.createTextNode("Assignment Priority:");
@@ -115,7 +137,7 @@ function editableDiv(id){
             var prioName = document.createElement("input");
             prioName.type = "number";
             prioName.id = "re-prioName";
-            prioName.defaultValue = 5;
+            prioName.defaultValue = obj.taskPrio;
 
             var btnSave = document.createElement("input");
             btnSave.onclick = saveTask;
@@ -135,7 +157,7 @@ function editableDiv(id){
 function saveTask(){
     var id = (this.id).charAt(0);
     var person = document.getElementById("re-assignName").value;
-    var prio = document.getElementById("re-prioName").value;
+    var prio = parseInt(document.getElementById("re-prioName").value);
     var date = new Date();
     var time = formatedTime(date);
     with(taskList[id]){
@@ -145,4 +167,9 @@ function saveTask(){
     }
     console.log("Assignment with id "+id+" is edited!");
     closeModal();
+    var div = document.getElementById(id);
+    if(div){
+        div.parentNode.removeChild(div);
+    }
+    todoNewtask(id);
 }
