@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+}
+html{
+    font-family: "Lucida Sans",sans-serif;
+}
+nav{
+    display: block;
+    overflow: hidden;
+    background-color: black;
+}
+nav a{
+    float: left;
+    display: block;
+    padding: 10px 10px;
+    color: #f2f2f2;
+    text-decoration: none;
+}
+.col-3{
+    width: 25%;
+    float: left;
+    padding: 10px 10px;
+}
+button{
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #ddd;
+    border: none;
+    padding: 10px 10px;
+}
+.row{
+    padding: 10px 10px;
+}
+.row::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+@media only screen and (max-width: 768px){
+    [class*="col-"]{
+        width: 100%;
+    }
+}

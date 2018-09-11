@@ -1,0 +1,11 @@
+#user{
+    float: right;
+}
+#input-box input,label{
+    width: 100%;
+    display: block;
+    padding: 10px 10px;
+}
+#input-box input[type="button"]{
+    margin-top: 10px;
+}

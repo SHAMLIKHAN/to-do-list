@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <title>Task Tracker</title>
+        <link rel="stylesheet" href="assets/main.css"></link>
+        <link rel="stylesheet" href="assets/custom.css"></link>
+    </head>
+    <body>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="" id="user">ShamliKhan</a>
+        </nav>
+        <div class="row" id="parent">
+            <div class="col-3" id="create">
+                <button type="button" id="addNew" onclick="addNewTask()"><b>Add Assignment</b></button>
+                <p id="history">Assignment History</p>
+            </div>
+            <div class="col-3" id="todo">
+                <div id="todoHead">To Do</div>
+            </div>
+            <div class="col-3" id="inprogress">
+                <div id="inprogressHead">In Progress</div>
+            </div>
+            <div class="col-3" id="done">Done</div>
+        </div>
+        <div id="modalDiv" class="modal"></div>
+        <script type="text/javascript" src="js/createSection.js"></script>
+    </body>
+</html>
