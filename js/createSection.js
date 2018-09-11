@@ -80,8 +80,7 @@ function submitTask(){
         console.log(obj);
         taskList.push(obj);
         taskID = taskID+1;
-        /*todoNewtask(taskID-1);    Navigated to next js page. */
-        alert("Navigated to todo section!");
+        todoNewtask(taskID-1);    /* Navigated to next js page. */
     }
     else{
         console.log("Warning: All fields are required!!");
