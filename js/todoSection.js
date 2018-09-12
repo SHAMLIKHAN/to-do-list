@@ -43,6 +43,7 @@ function viewDiv(){
             var span = document.createElement("span");
             span.onclick = closeModal;
             span.innerHTML = "&times";
+            span.style.fontWeight = "bold";
             span.id = "close";
             var descPara = document.createElement("p");
             var taskDesc = document.createTextNode("Description: "+obj.taskDesc);
@@ -61,10 +62,12 @@ function viewDiv(){
             btnEdit.onclick = editTask;
             btnEdit.id = id+"btnEdit";
             btnEdit.type = "button";
+            btnEdit.style.fontWeight = "bold";
             btnEdit.value = "Edit Task Details";
             var btnBegin = document.createElement("input");
             btnBegin.onclick = beginTask;
             btnBegin.id = id+"btnBegin";
+            btnBegin.style.fontWeight = "bold";
             btnBegin.type = "button";
             btnBegin.value = "Begin To Work";
         div.appendChild(span);
@@ -154,6 +157,7 @@ function editableDiv(id){
             btnSave.onclick = saveTask;
             btnSave.id = id+"btnSave";
             btnSave.type = "button";
+            btnSave.style.fontWeight = "bold";
             btnSave.value = "Save";
         div.appendChild(span);
         div.appendChild(namePara);

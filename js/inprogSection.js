@@ -37,6 +37,7 @@ function viewProg(){
             btnFinish.onclick = finishTask;
             btnFinish.id = id+"btnFinish";
             btnFinish.type = "button";
+            btnFinish.style.fontWeight = "bold";
             btnFinish.value = "Assign Work as Finished!";
         div.appendChild(span);
         div.appendChild(namePara);

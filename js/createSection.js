@@ -1,72 +1,79 @@
 var taskID = 0;
 var taskList = [];  /* FEATURE: {Array Concepts} */
 var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
+var lock = true;
 function addNewTask(){
     console.log("Function is called to create a new assignment.");
+    if(lock){
+        lock = false;
+        var div = document.createElement("div");
+            var taskLabel = document.createElement("label");
+            var taskLabelName = document.createTextNode("Assignment Name:");
+            taskLabel.appendChild(taskLabelName);
+            var taskName = document.createElement("input");
+            taskName.type = "text";
+            taskName.id = "taskName";
+            taskName.defaultValue = "Project LXVIII";
 
-    var div = document.createElement("div");
-        var taskLabel = document.createElement("label");
-        var taskLabelName = document.createTextNode("Assignment Name:");
-        taskLabel.appendChild(taskLabelName);
-        var taskName = document.createElement("input");
-        taskName.type = "text";
-        taskName.id = "taskName";
-        taskName.defaultValue = "Project LXVIII";
-
-        var descLabel = document.createElement("label");
-        var descLabelName = document.createTextNode("Assignment Description:");
-        descLabel.appendChild(descLabelName);
-        var descName = document.createElement("input");
-        descName.type="text";
-        descName.id = "descName";
-        descName.defaultValue = "FR Project";
+            var descLabel = document.createElement("label");
+            var descLabelName = document.createTextNode("Assignment Description:");
+            descLabel.appendChild(descLabelName);
+            var descName = document.createElement("input");
+            descName.type="text";
+            descName.id = "descName";
+            descName.defaultValue = "FR Project";
 
 
-        var assignLabel = document.createElement("label");
-        var assignLabelName = document.createTextNode("Assigned to:");
-        assignLabel.appendChild(assignLabelName);
-        var assignName = document.createElement("input");
-        assignName.type = "text";
-        assignName.setAttribute("list","employees");
-        assignName.id = "assignName";
+            var assignLabel = document.createElement("label");
+            var assignLabelName = document.createTextNode("Assigned to:");
+            assignLabel.appendChild(assignLabelName);
+            var assignName = document.createElement("input");
+            assignName.type = "text";
+            assignName.setAttribute("list","employees");
+            assignName.id = "assignName";
 
-        /* Adding Autocomletion of People */
-        var dataList = document.createElement("datalist");
-        dataList.id = "employees";
-        for(let i=0;i<people.length;i++){
-            var option = document.createElement("option");
-            option.value = people[i];
-            dataList.appendChild(option);
-        }
-        /* Autocompletion ends here! */
+            /* Adding Autocomletion of People */
+            var dataList = document.createElement("datalist");
+            dataList.id = "employees";
+            for(let i=0;i<people.length;i++){
+                var option = document.createElement("option");
+                option.value = people[i];
+                dataList.appendChild(option);
+            }
+            /* Autocompletion ends here! */
 
-        var prioLabel = document.createElement("label");
-        var prioLabelName = document.createTextNode("Assignment Priority:");
-        prioLabel.appendChild(prioLabelName);
-        var prioName = document.createElement("input");
-        prioName.type = "number";
-        prioName.id = "prioName";
-        prioName.defaultValue = 5;
+            var prioLabel = document.createElement("label");
+            var prioLabelName = document.createTextNode("Assignment Priority:");
+            prioLabel.appendChild(prioLabelName);
+            var prioName = document.createElement("input");
+            prioName.type = "number";
+            prioName.id = "prioName";
+            prioName.defaultValue = 5;
 
-        var btn = document.createElement("input");
-        btn.value = "Submit";
-        btn.type = "button";
-        btn.onclick= submitTask;
+            var btn = document.createElement("input");
+            btn.value = "Submit";
+            btn.type = "button";
+            btn.style.fontWeight = "bold";
+            btn.onclick= submitTask;
 
-    div.id = "input-box";
-    div.appendChild(taskLabel);
-    div.appendChild(taskName);
-    div.appendChild(descLabel);
-    div.appendChild(descName);
-    div.appendChild(assignLabel);
-    div.appendChild(assignName);
-    div.appendChild(dataList);
-    div.appendChild(prioLabel);
-    div.appendChild(prioName);
-    div.appendChild(btn);
+        div.id = "input-box";
+        div.appendChild(taskLabel);
+        div.appendChild(taskName);
+        div.appendChild(descLabel);
+        div.appendChild(descName);
+        div.appendChild(assignLabel);
+        div.appendChild(assignName);
+        div.appendChild(dataList);
+        div.appendChild(prioLabel);
+        div.appendChild(prioName);
+        div.appendChild(btn);
 
-    var currentElement = document.getElementById("history");
-    document.getElementById("create").insertBefore(div,currentElement);
+        var currentElement = document.getElementById("history");
+        document.getElementById("create").insertBefore(div,currentElement);
+    }
+    else{
+        console.log("Submit the task before creating another!");
+    }
 }
 function submitTask(){
     var div = document.getElementById("input-box");
@@ -94,6 +101,7 @@ function submitTask(){
         console.log(obj);
         taskList.push(obj);
         taskID = taskID+1;
+        lock = true;
         todoNewtask(taskID-1);    /* Navigated to next js page. */
     }
     else{
