@@ -129,7 +129,18 @@ function editableDiv(id){
             var assignName = document.createElement("input");
             assignName.type="text";
             assignName.id = "re-assignName";
+            assignName.setAttribute("list","employees");
             assignName.defaultValue = obj.taskAssign;
+
+            /* Adding Autocomletion of People */
+            var dataList = document.createElement("datalist");
+            dataList.id = "employees";
+            for(let i=0;i<people.length;i++){
+                var option = document.createElement("option");
+                option.value = people[i];
+                dataList.appendChild(option);
+            }
+            /* Autocompletion ends here! */
 
             var prioLabel = document.createElement("label");
             var prioLabelName = document.createTextNode("Assignment Priority:");
@@ -148,6 +159,7 @@ function editableDiv(id){
         div.appendChild(namePara);
         div.appendChild(assignLabel)
         div.appendChild(assignName);
+        div.appendChild(dataList);
         div.appendChild(prioLabel);
         div.appendChild(prioName);
         div.appendChild(btnSave);

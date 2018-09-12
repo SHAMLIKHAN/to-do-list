@@ -1,5 +1,6 @@
 var taskID = 0;
 var taskList = [];  /* FEATURE: {Array Concepts} */
+var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
 function addNewTask(){
     console.log("Function is called to create a new assignment.");
 
@@ -20,13 +21,24 @@ function addNewTask(){
         descName.id = "descName";
         descName.defaultValue = "FR Project";
 
+
         var assignLabel = document.createElement("label");
         var assignLabelName = document.createTextNode("Assigned to:");
         assignLabel.appendChild(assignLabelName);
         var assignName = document.createElement("input");
-        assignName.type="text";
+        assignName.type = "text";
+        assignName.setAttribute("list","employees");
         assignName.id = "assignName";
-        assignName.defaultValue = "ShamliKhan";
+
+        /* Adding Autocomletion of People */
+        var dataList = document.createElement("datalist");
+        dataList.id = "employees";
+        for(let i=0;i<people.length;i++){
+            var option = document.createElement("option");
+            option.value = people[i];
+            dataList.appendChild(option);
+        }
+        /* Autocompletion ends here! */
 
         var prioLabel = document.createElement("label");
         var prioLabelName = document.createTextNode("Assignment Priority:");
@@ -48,6 +60,7 @@ function addNewTask(){
     div.appendChild(descName);
     div.appendChild(assignLabel);
     div.appendChild(assignName);
+    div.appendChild(dataList);
     div.appendChild(prioLabel);
     div.appendChild(prioName);
     div.appendChild(btn);
