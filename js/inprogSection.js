@@ -5,10 +5,17 @@ function inprogressNewTask(id){
     div.innerHTML = obj.taskName;
     div.id = id;
     div.onclick = viewProg;
+    div.draggable = true;
+    div.addEventListener("dragstart",function(event){
+        player = event.target.parentNode.id;
+        console.log(player);
+        event.dataTransfer.setData("Text", event.target.id);
+    });
     document.getElementById("inprogress").appendChild(div);
 }
-function viewProg(){
-    var id = this.id;
+function viewProg(event){
+    var id = this.id || event.target.id;
+    console.log(id);
     var obj = taskList[id];
     console.log("Assignment with id "+id+" is clicked to view progress!");
     var modalDiv = document.getElementById("modalDiv");
@@ -49,8 +56,9 @@ function viewProg(){
     modalDiv.appendChild(div);
     modalDiv.style.display = "block";
 }
-function finishTask(){
-    var id = (this.id).charAt(0);
+function finishTask(id){
+    var id = (this.id)? (this.id).charAt(0): id;
+    console.log(id);
     closeModal();
 
     var div = document.getElementById(id);

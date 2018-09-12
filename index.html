@@ -22,10 +22,10 @@
             <div class="col-3" id="todo">
                 <div id="todoHead">To Do</div>
             </div>
-            <div class="col-3" id="inprogress">
+            <div class="col-3" id="inprogress" ondrop="dropInProg(event)" ondragover="allowDrop(event)">
                 <div id="inprogressHead">In Progress</div>
             </div>
-            <div class="col-3" id="done">
+            <div class="col-3" id="done" ondrop="dropDone(event)" ondragover="allowDrop(event)">
                 <div id="doneHead">Done</div>
             </div>
         </div>
@@ -34,5 +34,6 @@
         <script type="text/javascript" src="js/todoSection.js"></script>
         <script type="text/javascript" src="js/inprogSection.js"></script>
         <script type="text/javascript" src="js/doneSection.js"></script>
+        <script type="text/javascript" src="js/dragDiv.js"></script>
     </body>
 </html>

@@ -6,6 +6,12 @@ function todoNewtask(id){
     var div = document.createElement("div");
     div.innerHTML = obj.taskName;
     div.onclick = viewDiv;
+    div.draggable = true;
+    div.addEventListener("dragstart",function(event){
+        player = event.target.parentNode.id;
+        console.log(player);
+        event.dataTransfer.setData("Text", event.target.id);
+    });
     div.id = id;
     var divCount = document.getElementById("todo").childElementCount;
     if(divCount==1){
@@ -99,8 +105,8 @@ function editTask(){
     closeModal();
     editableDiv(id);
 }
-function beginTask(){
-    var id = (this.id).charAt(0);
+function beginTask(id){
+    var id = (this.id)? (this.id).charAt(0) : id;   /* FEATURE: {Conditional Operator} */
     closeModal();
     /*
     -- Here the corresponding div in the todo section will be deleted.
