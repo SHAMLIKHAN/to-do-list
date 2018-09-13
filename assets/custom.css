@@ -14,12 +14,14 @@
 #todo div{
     width: 100%;
     padding: 10px 10px;
-    background-color: #969696;
+    background-color: #34495E;
+    color: #f2f2f2;
     border-radius: 5px;
 }
 #todo div:not(#todoHead){
     margin-top: 10px;
     background-color: #ccc;
+    color: black;
 }
 #todo input[type="button"]{
     float:right;
@@ -27,22 +29,26 @@
 #inprogress div{
     width: 100%;
     padding: 10px 10px;
-    background-color: #969696;
+    background-color: #34495E;
+    color: #f2f2f2;
     border-radius: 5px;
 }
 #inprogress div:not(#inprogressHead){
     margin-top: 10px;
     background-color: #ccc;
+    color: black;
 }
 #done div{
     width: 100%;
     padding: 10px 10px;
-    background-color: #969696;
+    background-color: #34495E;
+    color: #f2f2f2;
     border-radius: 5px;
 }
 #done div:not(#doneHead){
     margin-top: 10px;
     background-color: #ccc;
+    color: black;
 }
 @media only screen and (min-width: 768px){
     #todo,#inprogress,#done{

@@ -58,6 +58,13 @@ function addNewTask(){
             btn.style.fontWeight = "bold";
             btn.onclick= submitTask;
 
+            var cancelLabel = document.createElement("label");
+            var cancelLabelName = document.createTextNode("Cancel");
+            cancelLabel.appendChild(cancelLabelName);
+            cancelLabel.onclick = closeInputBox;
+            cancelLabel.style.textAlign = "right";
+            cancelLabel.style.color = "#34495E";
+
         div.id = "input-box";
         div.appendChild(taskLabel);
         div.appendChild(taskName);
@@ -69,6 +76,7 @@ function addNewTask(){
         div.appendChild(prioLabel);
         div.appendChild(prioName);
         div.appendChild(btn);
+        div.appendChild(cancelLabel);
 
         var currentElement = document.getElementById("history");
         document.getElementById("create").insertBefore(div,currentElement);
@@ -190,4 +198,12 @@ function clearLabels(){
     if(reqLabel){
         reqLabel.parentNode.removeChild(reqLabel);
     }
+}
+function closeInputBox(){
+    lock = true;
+    var div = document.getElementById("input-box");
+    if(div){
+        div.parentNode.removeChild(div);
+    }
+    console.log("Assignment creation is Cancelled!");
 }

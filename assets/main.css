@@ -18,6 +18,8 @@ nav a{
 }
 .col-3{
     width: 25%;
+    height: auto;
+    min-height: 600px;
     float: left;
     padding: 5px 5px;
 }
@@ -27,6 +29,7 @@ button{
     text-align: center;
     background-color: #ccc;
     font-family: "Times New Roman",Times,serif;
+    color: #black;
     border: none;
     padding: 10px 10px;
 }
@@ -77,5 +80,7 @@ button{
 @media only screen and (max-width: 768px){
     [class*="col-"]{
         width: 100%;
+        height: auto;
+        min-height: 0px;
     }
 }
