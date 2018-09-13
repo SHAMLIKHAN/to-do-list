@@ -1,18 +1,44 @@
+var idParent;
 function todoNewtask(id){
     console.log("@ todo Section!!!");
     var obj = taskList[id];
     var append;
 
     var div = document.createElement("div");
-    div.innerHTML = obj.taskName;
-    div.onclick = viewDiv;
+        var heading = document.createElement("block");
+            var btn = document.createElement("block");
+            btn.id = id+"btn";
+            btn.style.float = "right";
+            btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
+            btn.onclick = editTask;
+            var name = document.createElement("block");
+            name.id = id+"name";
+            name.innerHTML = obj.taskName;
+            name.onclick = toggleDiv;
+        heading.appendChild(btn);
+        heading.appendChild(name);
+        heading.id = id+"heading";
+    div.appendChild(heading);
     div.draggable = true;
     div.addEventListener("dragstart",function(event){
         player = event.target.parentNode.id;
-        console.log(player);
         event.dataTransfer.setData("Text", event.target.id);
     });
     div.id = id;
+
+    /* Inner Content */
+        var block = document.createElement("block");
+        var dt = getDateTime(obj.createdOn);
+        var data =  "<p>Description: "+obj.taskDesc+" </p>"+
+                    "<p>Assigned to: "+obj.taskAssign+" </p>"+
+                    "<p>Priority: "+obj.taskPrio+" </p>"+
+                    "<p>Created On: "+dt+" </p>";
+        block.id = id+"details";
+        block.innerHTML = data;
+        block.style.display = "none";
+    div.appendChild(block);
+    /* Inner Content ends here! */
+
     var divCount = document.getElementById("todo").childElementCount;
     if(divCount==1){
         document.getElementById("todo").appendChild(div);
@@ -37,56 +63,6 @@ function todoNewtask(id){
     }
     /* Sorting ends here! */
 }
-function viewDiv(){
-    var id = this.id;
-    var obj = taskList[id];
-    console.log("Assignment with id "+id+" is clicked to view!");
-    var modalDiv = document.getElementById("modalDiv");
-        var div = document.createElement("div");
-        div.id = "modalInnerDiv";
-            var namePara = document.createElement("p");
-            namePara.innerHTML = "<b>"+obj.taskName+"</b>";
-            var span = document.createElement("span");
-            span.onclick = closeModal;
-            span.innerHTML = "&times";
-            span.style.fontWeight = "bold";
-            span.id = "close";
-            var descPara = document.createElement("p");
-            var taskDesc = document.createTextNode("Description: "+obj.taskDesc);
-            descPara.appendChild(taskDesc);
-            var assignPara = document.createElement("p");
-            var taskAssign = document.createTextNode("Assigned to: "+obj.taskAssign);
-            assignPara.appendChild(taskAssign);
-            var prioPara = document.createElement("p");
-            var taskPrio = document.createTextNode("Priority: "+obj.taskPrio);
-            prioPara.appendChild(taskPrio);
-            var timePara = document.createElement("p");
-            var dt = getDateTime(obj.createdOn);
-            var createdOn = document.createTextNode("Created on: "+dt);
-            timePara.appendChild(createdOn);
-            var btnEdit = document.createElement("input");
-            btnEdit.onclick = editTask;
-            btnEdit.id = id+"btnEdit";
-            btnEdit.type = "button";
-            btnEdit.style.fontWeight = "bold";
-            btnEdit.value = "Edit Task Details";
-            var btnBegin = document.createElement("input");
-            btnBegin.onclick = beginTask;
-            btnBegin.id = id+"btnBegin";
-            btnBegin.style.fontWeight = "bold";
-            btnBegin.type = "button";
-            btnBegin.value = "Begin To Work";
-        div.appendChild(span);
-        div.appendChild(namePara);
-        div.appendChild(descPara);
-        div.appendChild(assignPara);
-        div.appendChild(prioPara);
-        div.appendChild(timePara);
-        div.appendChild(btnEdit);
-        div.appendChild(btnBegin);
-    modalDiv.appendChild(div);
-    modalDiv.style.display = "block";
-}
 function closeModal(){
     var modalDiv = document.getElementById("modalDiv");
         var div = document.getElementById("modalInnerDiv");
@@ -102,6 +78,7 @@ function getDateTime(obj){
 }
 function editTask(){
     var id = (this.id).charAt(0);
+    idParent = document.getElementById(id).parentNode.id;
     closeModal();
     editableDiv(id);
 }
@@ -121,7 +98,6 @@ function beginTask(id){
 }
 function editableDiv(id){
     var obj = taskList[id];
-
     var modalDiv = document.getElementById("modalDiv");
         var div = document.createElement("div");
         div.id = "modalInnerDiv";
@@ -193,5 +169,19 @@ function saveTask(){
     if(div){
         div.parentNode.removeChild(div);
     }
-    todoNewtask(id);
+    if(idParent === "todo"){
+        todoNewtask(id);
+    }
+    else{
+        beginTask(id);
+    }
+}
+function toggleDiv(){
+    var id = (this.id).charAt(0)+"details";
+    if(document.getElementById(id).style.display === "none"){
+        document.getElementById(id).style.display = "block";
+    }
+    else{
+        document.getElementById(id).style.display = "none";
+    }
 }

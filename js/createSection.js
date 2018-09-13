@@ -16,6 +16,7 @@ function addNewTask(){
             taskName.defaultValue = "Project LXVIII";
 
             var descLabel = document.createElement("label");
+            descLabel.id = "descLabel";
             var descLabelName = document.createTextNode("Assignment Description:");
             descLabel.appendChild(descLabelName);
             var descName = document.createElement("input");
@@ -23,8 +24,8 @@ function addNewTask(){
             descName.id = "descName";
             descName.defaultValue = "FR Project";
 
-
             var assignLabel = document.createElement("label");
+            assignLabel.id = "assignLabel";
             var assignLabelName = document.createTextNode("Assigned to:");
             assignLabel.appendChild(assignLabelName);
             var assignName = document.createElement("input");
@@ -51,6 +52,7 @@ function addNewTask(){
             prioName.defaultValue = 5;
 
             var btn = document.createElement("input");
+            btn.id = "btnSubmit";
             btn.value = "Submit";
             btn.type = "button";
             btn.style.fontWeight = "bold";
@@ -76,12 +78,13 @@ function addNewTask(){
     }
 }
 function submitTask(){
+    clearLabels();
     var div = document.getElementById("input-box");
     var taskName = document.getElementById("taskName").value;
     var taskDesc = document.getElementById("descName").value;
     var person = document.getElementById("assignName").value;
     var taskPrio = parseInt(document.getElementById("prioName").value);
-    var flag = processForm(taskName,taskDesc,person);
+    var flag = processForm(taskName,taskDesc,taskPrio);
     if(flag){
         var date = new Date();
         var time = formatedTime(date);  /* FEATURE: {Object Concepts} */
@@ -131,18 +134,60 @@ function formatedTime(date){
     }
     return obj;
 }
-function processForm(name,desc,person){
-    if(name===""){
+function processForm(name,desc,prio){
+    var status = true;
+    var reqName = document.createTextNode("Enter the name of the Assignment!");
+    var reqDesc = document.createTextNode("Enter the description of the Assignment!");
+    if(name === ""){
         console.log("Name of the Task is not entered.");
-        return false;
+        var reqLabel = document.createElement("label");
+        reqLabel.style.color = "red";
+        reqLabel.appendChild(reqName);
+        reqLabel.id = "noName";
+        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("descLabel"));
+        status = false;
     }
-    if(desc===""){
+    if(desc === ""){
         console.log("Description of the Task is not entered.");
-        return false;
+        var reqLabel = document.createElement("label");
+        reqLabel.style.color = "red";
+        reqLabel.appendChild(reqDesc);
+        reqLabel.id = "noDesc";
+        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("assignLabel"));
+        status = false;
     }
-    if(person===""){
-        console.log("The Task isn't assigned yet.");
-        return false;
+    if(isNaN(prio)){
+        console.log("The Task priority isn't assigned yet.");
+        var reqLabel = document.createElement("label");
+        reqLabel.style.color = "red";
+        var reqPrio = document.createTextNode("Priority of can't be empty!");
+        reqLabel.appendChild(reqPrio);
+        reqLabel.id = "noPrio";
+        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("btnSubmit"));
+        status = false;
     }
-    return true;
+    if(prio<=0){
+        console.log("The Task priority is invalid.");
+        var reqLabel = document.createElement("label");
+        reqLabel.style.color = "red";
+        var reqPrio = document.createTextNode("Assign valid priority!");
+        reqLabel.appendChild(reqPrio);
+        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("btnSubmit"));
+        status = false;
+    }
+    return status;
+}
+function clearLabels(){
+    var reqLabel = document.getElementById("noName");
+    if(reqLabel){
+        reqLabel.parentNode.removeChild(reqLabel);
+    }
+    reqLabel = document.getElementById("noDesc");
+    if(reqLabel){
+        reqLabel.parentNode.removeChild(reqLabel);
+    }
+    reqLabel = document.getElementById("noPrio");
+    if(reqLabel){
+        reqLabel.parentNode.removeChild(reqLabel);
+    }
 }

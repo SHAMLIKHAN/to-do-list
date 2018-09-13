@@ -2,11 +2,32 @@ function doneNewTask(id){
     console.log("@ done Section!!!");
     var obj = taskList[id];
     var div = document.createElement("div");
-    div.innerHTML = obj.taskName;
     div.id = id;
-    div.onclick = taskDetails;
+        var heading = document.createElement("block");
+            var name = document.createElement("block");
+            name.id = id+"name";
+            name.innerHTML = obj.taskName;
+        heading.appendChild(name);
+        heading.id = id+"heading";
+    div.appendChild(heading);
+    div.onclick = toggleDiv;
+
+    /* Inner Content */
+        var block = document.createElement("block");
+        var dtCreated = getDateTime(obj.createdOn);
+        var dtFinished = getDateTime(obj.finishedOn);
+        var data =  "<p>Description: "+obj.taskDesc+" </p>"+
+                    "<p>Assigned to: "+obj.taskAssign+" </p>"+
+                    "<p>Priority: "+obj.taskPrio+" </p>"+
+                    "<p>Created On: "+dtCreated+" </p>"+
+                    "<p>Finished On: "+dtFinished+" </p>";
+        block.id = id+"details";
+        block.innerHTML = data;
+        block.style.display = "none";
+    div.appendChild(block);
+    /* Inner Content ends here! */
     document.getElementById("done").appendChild(div);
-}
+}/*
 function taskDetails(){
     var id = this.id;
     var obj = taskList[id];
@@ -47,3 +68,4 @@ function taskDetails(){
     modalDiv.appendChild(div);
     modalDiv.style.display = "block";
 }
+*/

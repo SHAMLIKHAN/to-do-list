@@ -44,3 +44,8 @@
     margin-top: 10px;
     background-color: #ccc;
 }
+@media only screen and (min-width: 768px){
+    #todo,#inprogress,#done{
+        border-left: 1px solid #969696;
+    }
+}
