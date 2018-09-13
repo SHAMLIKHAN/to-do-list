@@ -9,6 +9,12 @@ function inprogressNewTask(id){
             btn.style.float = "right";
             btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
             btn.onclick = editTask;
+            btn.addEventListener("mouseover",function(event){
+                var idHover = event.target.id;
+                try{
+                    document.getElementById(idHover).style.cursor = "pointer";
+                }catch(e){}
+            });
             var name = document.createElement("block");
             name.id = id+"name";
             name.innerHTML = obj.taskName;

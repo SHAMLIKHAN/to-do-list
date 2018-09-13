@@ -16,10 +16,10 @@
             <a href="" id="user">User</a>
         </nav>
         <div class="row" id="parent">
-            <div class="col-3" id="create">
+            <!-- div class="col-4" id="create">
                 <button type="button" id="addNew" onclick="addNewTask()"><b>Add Assignment</b></button>
                 <p id="history"><i>Assignment History</i></p>
-            </div>
+            </div-->
             <div class="col-3" id="todo">
                 <div id="todoHead">To Do</div>
             </div>
@@ -29,6 +29,9 @@
             <div class="col-3" id="done" ondrop="dropDone(event)" ondragover="allowDrop(event)">
                 <div id="doneHead">Done</div>
             </div>
+            <button type="button" id="addNew" onclick="addNewTask()">
+                <i class="material-icons" style="font-size:24px">queue</i>
+            </button>
         </div>
         <div id="modalDiv" class="modal"></div>
         <script type="text/javascript" src="js/createSection.js"></script>

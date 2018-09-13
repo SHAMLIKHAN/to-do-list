@@ -17,6 +17,13 @@ nav a{
     text-decoration: none;
 }
 .col-3{
+    width: 33.33%;
+    height: auto;
+    min-height: 600px;
+    float: left;
+    padding: 5px 5px;
+}
+.col-4{
     width: 25%;
     height: auto;
     min-height: 600px;
@@ -24,14 +31,25 @@ nav a{
     padding: 5px 5px;
 }
 button{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    z-index: 1;
     display: block;
-    width: 100%;
     text-align: center;
-    background-color: #ccc;
+    background-color: #34495E;
     font-family: "Times New Roman",Times,serif;
-    color: #black;
+    color: #f2f2f2;
     border: none;
     padding: 10px 10px;
+}
+button:hover{
+    color: black;
+    background-color: #ccc;
 }
 .row{
     padding-top: 10px;
@@ -76,6 +94,16 @@ button{
 #modalInnerDiv input[type="button"]{
     margin-top: 10px;
     background-color: #ccc;
+}
+#toast{
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    z-index: 1;
+    margin: auto;
+    bottom: 0;
 }
 @media only screen and (max-width: 768px){
     [class*="col-"]{

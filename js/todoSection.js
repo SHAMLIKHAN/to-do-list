@@ -11,6 +11,13 @@ function todoNewtask(id){
             btn.style.float = "right";
             btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
             btn.onclick = editTask;
+                /* FEATURE: {try-catch} */
+            btn.addEventListener("mouseover",function(event){
+                var idHover = event.target.id;
+                try{
+                    document.getElementById(idHover).style.cursor = "pointer";
+                }catch(e){}
+            });
             var name = document.createElement("block");
             name.id = id+"name";
             name.innerHTML = obj.taskName;
@@ -22,7 +29,12 @@ function todoNewtask(id){
     div.draggable = true;
     div.addEventListener("dragstart",function(event){
         player = event.target.parentNode.id;
-        event.dataTransfer.setData("Text", event.target.id);
+        if(taskList[parseInt(event.target.id)].taskAssign === ""){
+            console.log("The task isn't assigned yet!");
+        }
+        else{
+            event.dataTransfer.setData("Text", event.target.id);
+        }
     });
     div.id = id;
 
@@ -88,13 +100,15 @@ function beginTask(id){
     /*
     -- Here the corresponding div in the todo section will be deleted.
     */
-    var div = document.getElementById(id);
-    if(div){
-        div.parentNode.removeChild(div);
+    if(isNaN(id)===false){
+        var div = document.getElementById(id);
+        if(div){
+            div.parentNode.removeChild(div);
+        }
+        taskList[id].status = "inprogress";
+        console.log("Status of the assignment with id "+id+" is changed to 'inprogress'");
+        inprogressNewTask(id);    /* Navigated to next js page */
     }
-    taskList[id].status = "inprogress";
-    console.log("Status of the assignment with id "+id+" is changed to 'inprogress'");
-    inprogressNewTask(id);    /* Navigated to next js page */
 }
 function editableDiv(id){
     var obj = taskList[id];
@@ -177,11 +191,14 @@ function saveTask(){
     }
 }
 function toggleDiv(){
-    var id = (this.id).charAt(0)+"details";
+    var id = this.id;
+    document.getElementById(id).style.fontWeight = "bold";
+    id = (this.id).charAt(0)+"details";
     if(document.getElementById(id).style.display === "none"){
         document.getElementById(id).style.display = "block";
     }
     else{
+        document.getElementById(this.id).style.fontWeight = "normal";
         document.getElementById(id).style.display = "none";
     }
 }

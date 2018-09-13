@@ -1,12 +1,15 @@
 var taskID = 0;
 var taskList = [];  /* FEATURE: {Array Concepts} */
 var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
-var lock = true;
 function addNewTask(){
-    console.log("Function is called to create a new assignment.");
-    if(lock){
-        lock = false;
+    console.log("Button is clicked to create a new assignment.");
+
+    var modalDiv = document.getElementById("modalDiv");
         var div = document.createElement("div");
+            var span = document.createElement("span");
+            span.onclick = closeModal;
+            span.innerHTML = "&times";
+            span.id = "close";
             var taskLabel = document.createElement("label");
             var taskLabelName = document.createTextNode("Assignment Name:");
             taskLabel.appendChild(taskLabelName);
@@ -49,7 +52,6 @@ function addNewTask(){
             var prioName = document.createElement("input");
             prioName.type = "number";
             prioName.id = "prioName";
-            prioName.defaultValue = 5;
 
             var btn = document.createElement("input");
             btn.id = "btnSubmit";
@@ -58,14 +60,8 @@ function addNewTask(){
             btn.style.fontWeight = "bold";
             btn.onclick= submitTask;
 
-            var cancelLabel = document.createElement("label");
-            var cancelLabelName = document.createTextNode("Cancel");
-            cancelLabel.appendChild(cancelLabelName);
-            cancelLabel.onclick = closeInputBox;
-            cancelLabel.style.textAlign = "right";
-            cancelLabel.style.color = "#34495E";
-
-        div.id = "input-box";
+        div.id = "modalInnerDiv";
+        div.appendChild(span);
         div.appendChild(taskLabel);
         div.appendChild(taskName);
         div.appendChild(descLabel);
@@ -76,18 +72,12 @@ function addNewTask(){
         div.appendChild(prioLabel);
         div.appendChild(prioName);
         div.appendChild(btn);
-        div.appendChild(cancelLabel);
-
-        var currentElement = document.getElementById("history");
-        document.getElementById("create").insertBefore(div,currentElement);
-    }
-    else{
-        console.log("Submit the task before creating another!");
-    }
+    modalDiv.appendChild(div);
+    modalDiv.style.display = "block";
 }
 function submitTask(){
     clearLabels();
-    var div = document.getElementById("input-box");
+    var div = document.getElementById("modalInnerDiv");
     var taskName = document.getElementById("taskName").value;
     var taskDesc = document.getElementById("descName").value;
     var person = document.getElementById("assignName").value;
@@ -106,7 +96,7 @@ function submitTask(){
             status:"todo"
         }
         if(div){
-          div.parentNode.removeChild(div);
+          closeModal();
         }
         console.log("Created Assignment details are:");
         console.log(obj);
@@ -152,7 +142,7 @@ function processForm(name,desc,prio){
         reqLabel.style.color = "red";
         reqLabel.appendChild(reqName);
         reqLabel.id = "noName";
-        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("descLabel"));
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("descLabel"));
         status = false;
     }
     if(desc === ""){
@@ -161,7 +151,7 @@ function processForm(name,desc,prio){
         reqLabel.style.color = "red";
         reqLabel.appendChild(reqDesc);
         reqLabel.id = "noDesc";
-        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("assignLabel"));
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("assignLabel"));
         status = false;
     }
     if(isNaN(prio)){
@@ -171,7 +161,7 @@ function processForm(name,desc,prio){
         var reqPrio = document.createTextNode("Priority of can't be empty!");
         reqLabel.appendChild(reqPrio);
         reqLabel.id = "noPrio";
-        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("btnSubmit"));
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
         status = false;
     }
     if(prio<=0){
@@ -180,7 +170,8 @@ function processForm(name,desc,prio){
         reqLabel.style.color = "red";
         var reqPrio = document.createTextNode("Assign valid priority!");
         reqLabel.appendChild(reqPrio);
-        document.getElementById("input-box").insertBefore(reqLabel,document.getElementById("btnSubmit"));
+        reqLabel.id = "invalidPrio";
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
         status = false;
     }
     return status;
@@ -198,12 +189,13 @@ function clearLabels(){
     if(reqLabel){
         reqLabel.parentNode.removeChild(reqLabel);
     }
-}
-function closeInputBox(){
-    lock = true;
-    var div = document.getElementById("input-box");
-    if(div){
-        div.parentNode.removeChild(div);
+    reqLabel = document.getElementById("invalidPrio");
+    if(reqLabel){
+        reqLabel.parentNode.removeChild(reqLabel);
     }
-    console.log("Assignment creation is Cancelled!");
+}
+window.onclick = function(event){
+    if(event.target.id == "modalDiv"){
+        closeModal();
+    }
 }

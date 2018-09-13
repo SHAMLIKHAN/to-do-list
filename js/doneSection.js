@@ -7,10 +7,10 @@ function doneNewTask(id){
             var name = document.createElement("block");
             name.id = id+"name";
             name.innerHTML = obj.taskName;
+            name.onclick = toggleDiv;
         heading.appendChild(name);
         heading.id = id+"heading";
     div.appendChild(heading);
-    div.onclick = toggleDiv;
 
     /* Inner Content */
         var block = document.createElement("block");
