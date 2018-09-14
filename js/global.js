@@ -1,5 +1,5 @@
 var user;
-function getUser(){
+function getUser() {
     user = localStorage.getItem('user');
     console.log(user);
     document.getElementById("user").innerHTML = user || "User";

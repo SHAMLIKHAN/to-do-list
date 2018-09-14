@@ -1,8 +1,10 @@
-function finishTask(id){
-    var id = (this.id)? (this.id).charAt(0): id;
+function finishTask(id) {
+    var id = (this.id)
+    ? (this.id).charAt(0)
+    : id;
     /* The corresponding div in the inprogress section will be deleted. */
     var div = document.getElementById(id);
-    if(div){
+    if(div) {
         div.parentNode.removeChild(div);
     }
     var date = new Date();
@@ -13,7 +15,7 @@ function finishTask(id){
     doneNewTask(id);
 }
 
-function doneNewTask(id){
+function doneNewTask(id) {
     console.log("@ done Section!!!");
     var obj = taskList[id];
     var div = document.createElement("div");
@@ -31,7 +33,7 @@ function doneNewTask(id){
         var block = document.createElement("block");
         var dtCreated = getDateTime(obj.createdOn);
         var dtFinished = getDateTime(obj.finishedOn);
-        var data =  "<p>Description: "+obj.taskDesc+" </p>"+
+        var data = "<p>Description: "+obj.taskDesc+" </p>"+
                     "<p>Assigned to: "+obj.taskAssign+" </p>"+
                     "<p>Priority: "+obj.taskPrio+" </p>"+
                     "<p>Created On: "+dtCreated+" </p>"+

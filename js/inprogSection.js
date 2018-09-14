@@ -1,11 +1,13 @@
-function beginTask(id){
+function beginTask(id) {
     /* FEATURE: {Conditional Operator} */
-    var id = (this.id)? (this.id).charAt(0) : id;
+    var id = (this.id)
+        ? (this.id).charAt(0)
+        : id;
 
     /* Here the corresponding div in the todo section will be deleted. */
-    if(isNaN(id) === false){
+    if(isNaN(id) === false) {
         var div = document.getElementById(id);
-        if(div){
+        if(div) {
             div.parentNode.removeChild(div);
         }
         taskList[id].status = "inprogress";
@@ -14,7 +16,7 @@ function beginTask(id){
     }
 }
 
-function inprogressNewTask(id){
+function inprogressNewTask(id) {
     console.log("@ inprogress Section!!!");
     var obj = taskList[id];
     var append;  /* To know whether the div is to be appendable or not! */
@@ -25,11 +27,11 @@ function inprogressNewTask(id){
             btn.style.float = "right";
             btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
             btn.onclick = editTask;
-            btn.addEventListener("mouseover",function(event){
+            btn.addEventListener("mouseover",function(event) {
                 var hoverID = event.target.id;
-                try{
+                try {
                     document.getElementById(hoverID).style.cursor = "pointer";
-                }catch(e){}
+                }catch(e) {}
             });
 
             var name = document.createElement("block");
@@ -44,7 +46,7 @@ function inprogressNewTask(id){
     /* Inner Content */
         var block = document.createElement("block");
         var dt = getDateTime(obj.createdOn);
-        var data =  "<p>Description: "+obj.taskDesc+" </p>"+
+        var data = "<p>Description: "+obj.taskDesc+" </p>"+
                     "<p>Assigned to: "+obj.taskAssign+" </p>"+
                     "<p>Priority: "+obj.taskPrio+" </p>"+
                     "<p>Created On: "+dt+" </p>";
@@ -56,22 +58,22 @@ function inprogressNewTask(id){
 
     div.id = id;
     div.draggable = true;
-    div.addEventListener("dragstart",function(event){
+    div.addEventListener("dragstart",function(event) {
         player = event.target.parentNode.id;
         event.dataTransfer.setData("Text", event.target.id);
     });
 
     var divCount = document.getElementById("inprogress").childElementCount;
-    if(divCount==1){
+    if(divCount==1) {
         document.getElementById("inprogress").appendChild(div);
     }
     /* Sorting based on Priority */
-    else{
+    else {
         append = false;
         var pos = document.getElementById("inprogressHead").nextElementSibling.id;
         var current = document.getElementById(pos);
-        while(taskList[pos].taskPrio < taskList[id].taskPrio){
-            if(document.getElementById(pos).nextElementSibling == null){
+        while(taskList[pos].taskPrio < taskList[id].taskPrio) {
+            if(document.getElementById(pos).nextElementSibling === null) {
                 document.getElementById("inprogress").appendChild(div);
                 append = true;
                 break;
@@ -79,7 +81,7 @@ function inprogressNewTask(id){
             pos = document.getElementById(pos).nextElementSibling.id;
             current = document.getElementById(pos);
         }
-        if(append === false){
+        if(append === false) {
             document.getElementById("inprogress").insertBefore(div,current);
         }
     }
