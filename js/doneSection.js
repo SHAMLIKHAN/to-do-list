@@ -1,3 +1,18 @@
+function finishTask(id){
+    var id = (this.id)? (this.id).charAt(0): id;
+    /* The corresponding div in the inprogress section will be deleted. */
+    var div = document.getElementById(id);
+    if(div){
+        div.parentNode.removeChild(div);
+    }
+    var date = new Date();
+    var time = formatedTime(date);
+    taskList[id].status = "done";
+    taskList[id].finishedOn = time;
+    console.log("Status of the assignment with id "+id+" is changed to 'done'");
+    doneNewTask(id);
+}
+
 function doneNewTask(id){
     console.log("@ done Section!!!");
     var obj = taskList[id];
@@ -27,45 +42,4 @@ function doneNewTask(id){
     div.appendChild(block);
     /* Inner Content ends here! */
     document.getElementById("done").appendChild(div);
-}/*
-function taskDetails(){
-    var id = this.id;
-    var obj = taskList[id];
-    console.log("Assignment with id "+id+" is clicked to view details!");
-    var modalDiv = document.getElementById("modalDiv");
-        var div = document.createElement("div");
-        div.id = "modalInnerDiv";
-            var namePara = document.createElement("p");
-            namePara.innerHTML = "<b>"+obj.taskName+"</b>";
-            var span = document.createElement("span");
-            span.onclick = closeModal;
-            span.innerHTML = "&times";
-            span.id = "close";
-            var descPara = document.createElement("p");
-            var taskDesc = document.createTextNode("Description: "+obj.taskDesc);
-            descPara.appendChild(taskDesc);
-            var assignPara = document.createElement("p");
-            var taskAssign = document.createTextNode("Assigned to: "+obj.taskAssign);
-            assignPara.appendChild(taskAssign);
-            var prioPara = document.createElement("p");
-            var taskPrio = document.createTextNode("Priority: "+obj.taskPrio);
-            prioPara.appendChild(taskPrio);
-            var timePara = document.createElement("p");
-            var dtCreated = getDateTime(obj.createdOn);
-            var createdOn = document.createTextNode("Created on: "+dtCreated);
-            timePara.appendChild(createdOn);
-            var timeFinishedPara = document.createElement("p");
-            var dtFinished = getDateTime(obj.finishedOn);
-            var finishedOn = document.createTextNode("Finished on: "+dtFinished);
-            timeFinishedPara.appendChild(finishedOn);
-        div.appendChild(span);
-        div.appendChild(namePara);
-        div.appendChild(descPara);
-        div.appendChild(assignPara);
-        div.appendChild(prioPara);
-        div.appendChild(timePara);
-        div.appendChild(timeFinishedPara);
-    modalDiv.appendChild(div);
-    modalDiv.style.display = "block";
 }
-*/

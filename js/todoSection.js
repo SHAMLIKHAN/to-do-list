@@ -1,29 +1,31 @@
 var idParent;
+
 function todoNewtask(id){
     console.log("@ todo Section!!!");
     var obj = taskList[id];
-    var append;
+    var append; /* To know whether the div is to be appendable or not! */
 
     var div = document.createElement("div");
         var heading = document.createElement("block");
+            var name = document.createElement("block");
+            name.id = id+"name";
+            name.innerHTML = obj.taskName;
+            name.onclick = toggleDiv;
+
             var btn = document.createElement("block");
             btn.id = id+"btn";
             btn.style.float = "right";
             btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
             btn.onclick = editTask;
-                /* FEATURE: {try-catch} */
+            /* FEATURE: {try-catch} */
             btn.addEventListener("mouseover",function(event){
-                var idHover = event.target.id;
+                var hoverID = event.target.id;
                 try{
-                    document.getElementById(idHover).style.cursor = "pointer";
+                    document.getElementById(hoverID).style.cursor = "pointer";
                 }catch(e){}
             });
-            var name = document.createElement("block");
-            name.id = id+"name";
-            name.innerHTML = obj.taskName;
-            name.onclick = toggleDiv;
-        heading.appendChild(btn);
         heading.appendChild(name);
+        heading.appendChild(btn);
         heading.id = id+"heading";
     div.appendChild(heading);
     div.draggable = true;
@@ -32,9 +34,7 @@ function todoNewtask(id){
         if(taskList[parseInt(event.target.id)].taskAssign === ""){
             console.log("The task isn't assigned yet!");
         }
-        else{
-            event.dataTransfer.setData("Text", event.target.id);
-        }
+        event.dataTransfer.setData("Text", event.target.id);
     });
     div.id = id;
 
@@ -61,9 +61,9 @@ function todoNewtask(id){
         var pos = document.getElementById("todoHead").nextElementSibling.id;
         var current = document.getElementById(pos);
         while(taskList[pos].taskPrio < taskList[id].taskPrio){
-            if(document.getElementById(pos).nextElementSibling==null){
-                document.getElementById("todo").appendChild(div);
+            if(document.getElementById(pos).nextElementSibling == null){
                 append = true;
+                document.getElementById("todo").appendChild(div);
                 break;
             }
             pos = document.getElementById(pos).nextElementSibling.id;
@@ -75,52 +75,33 @@ function todoNewtask(id){
     }
     /* Sorting ends here! */
 }
-function closeModal(){
-    var modalDiv = document.getElementById("modalDiv");
-        var div = document.getElementById("modalInnerDiv");
-        if(div){
-            div.parentNode.removeChild(div);
-        }
-    modalDiv.style.display = "none";
-}
-function getDateTime(obj){
-    var date = obj.dd+"/"+obj.mm+"/"+obj.yyyy;
-    var time = obj.hours+":"+obj.minutes+":"+obj.seconds;
-    return (date+" "+time);
-}
-function editTask(){
-    var id = (this.id).charAt(0);
-    idParent = document.getElementById(id).parentNode.id;
-    closeModal();
-    editableDiv(id);
-}
-function beginTask(id){
-    var id = (this.id)? (this.id).charAt(0) : id;   /* FEATURE: {Conditional Operator} */
-    closeModal();
-    /*
-    -- Here the corresponding div in the todo section will be deleted.
-    */
-    if(isNaN(id)===false){
-        var div = document.getElementById(id);
-        if(div){
-            div.parentNode.removeChild(div);
-        }
-        taskList[id].status = "inprogress";
-        console.log("Status of the assignment with id "+id+" is changed to 'inprogress'");
-        inprogressNewTask(id);    /* Navigated to next js page */
+
+function toggleDiv(){
+    var id = this.id;
+    document.getElementById(id).style.fontWeight = "bold";
+    id = (this.id).charAt(0)+"details";
+    if(document.getElementById(id).style.display === "none"){
+        document.getElementById(id).style.display = "block";
+    }
+    else{
+        document.getElementById(this.id).style.fontWeight = "normal";
+        document.getElementById(id).style.display = "none";
     }
 }
-function editableDiv(id){
+
+function editTask(){
+    var id = (this.id).charAt(0);
     var obj = taskList[id];
     var modalDiv = document.getElementById("modalDiv");
         var div = document.createElement("div");
         div.id = "modalInnerDiv";
-            var namePara = document.createElement("p");
-            namePara.innerHTML = "<b>"+obj.taskName+"</b>";
             var span = document.createElement("span");
             span.onclick = closeModal;
             span.innerHTML = "&times";
             span.id = "close";
+
+            var namePara = document.createElement("p");
+            namePara.innerHTML = "<b>"+obj.taskName+"</b>";
 
             var assignLabel = document.createElement("label");
             var assignLabelName = document.createTextNode("Assigned to:");
@@ -166,39 +147,72 @@ function editableDiv(id){
     modalDiv.appendChild(div);
     modalDiv.style.display = "block";
 }
+
 function saveTask(){
+    clearLabels();
     var id = (this.id).charAt(0);
+    var parentID = document.getElementById(id).parentNode.id;
     var person = document.getElementById("re-assignName").value;
     var prio = parseInt(document.getElementById("re-prioName").value);
-    var date = new Date();
-    var time = formatedTime(date);
-    with(taskList[id]){
-        taskPrio=prio;
-        taskAssign=person;
-        createdOn=time;
-    }
-    console.log("Assignment with id "+id+" is edited!");
-    closeModal();
-    var div = document.getElementById(id);
-    if(div){
-        div.parentNode.removeChild(div);
-    }
-    if(idParent === "todo"){
-        todoNewtask(id);
-    }
-    else{
-        beginTask(id);
+    var flag = validatePrio(id,prio);
+    if(flag){
+        var date = new Date();
+        var time = formatedTime(date);
+        with(taskList[id]){
+            taskPrio=prio;
+            taskAssign=person;
+            createdOn=time;
+        }
+        console.log("Assignment with id "+id+" is edited!");
+        closeModal();
+        var div = document.getElementById(id);
+        if(div){
+            div.parentNode.removeChild(div);
+        }
+        if(parentID === "todo"){
+            todoNewtask(id);
+        }
+        else{
+            beginTask(id); /* Navigated to next js page. */
+        }
     }
 }
-function toggleDiv(){
-    var id = this.id;
-    document.getElementById(id).style.fontWeight = "bold";
-    id = (this.id).charAt(0)+"details";
-    if(document.getElementById(id).style.display === "none"){
-        document.getElementById(id).style.display = "block";
+
+function getDateTime(obj){
+    var date = obj.dd+"/"+obj.mm+"/"+obj.yyyy;
+    var time = obj.hours+":"+obj.minutes+":"+obj.seconds;
+    return (date+" "+time);
+}
+
+function validatePrio(id,prio){
+    function createLabel(){
+        var reqLabel = document.createElement("label");
+        reqLabel.style.color = "red";
+        return reqLabel;
     }
-    else{
-        document.getElementById(this.id).style.fontWeight = "normal";
-        document.getElementById(id).style.display = "none";
+    var status = true;
+    if(isNaN(prio)){
+        console.log("The Task priority isn't assigned yet.");
+        var reqPrio = document.createTextNode("Priority can't be empty!");
+        var reqLabel = createLabel();
+        reqLabel.id = "noPrio";
+        reqLabel.appendChild(reqPrio);
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById(id+"btnSave"));
+        status = false;
     }
+    if(prio <= 0){
+        console.log("The Task priority is invalid.");
+        if(prio == 0){
+            var reqPrio = document.createTextNode("Priority can't be zero!");
+        }
+        else{
+            var reqPrio = document.createTextNode("Priority can't be negative!");
+        }
+        var reqLabel = createLabel();
+        reqLabel.id = "invalidPrio";
+        reqLabel.appendChild(reqPrio);
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById(id+"btnSave"));
+        status = false;
+    }
+    return status;
 }

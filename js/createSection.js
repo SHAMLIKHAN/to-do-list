@@ -1,22 +1,26 @@
 var taskID = 0;
-var taskList = [];  /* FEATURE: {Array Concepts} */
+/* FEATURE: {Array Concepts} */
+var taskList = [];
 var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
+
 function addNewTask(){
     console.log("Button is clicked to create a new assignment.");
 
     var modalDiv = document.getElementById("modalDiv");
         var div = document.createElement("div");
+
             var span = document.createElement("span");
             span.onclick = closeModal;
             span.innerHTML = "&times";
             span.id = "close";
+
             var taskLabel = document.createElement("label");
             var taskLabelName = document.createTextNode("Assignment Name:");
             taskLabel.appendChild(taskLabelName);
             var taskName = document.createElement("input");
             taskName.type = "text";
             taskName.id = "taskName";
-            taskName.defaultValue = "Project LXVIII";
+            taskName.placeholder = "Project LXVIII";
 
             var descLabel = document.createElement("label");
             descLabel.id = "descLabel";
@@ -25,7 +29,7 @@ function addNewTask(){
             var descName = document.createElement("input");
             descName.type="text";
             descName.id = "descName";
-            descName.defaultValue = "FR Project";
+            descName.placeholder = "FR Project";
 
             var assignLabel = document.createElement("label");
             assignLabel.id = "assignLabel";
@@ -75,9 +79,18 @@ function addNewTask(){
     modalDiv.appendChild(div);
     modalDiv.style.display = "block";
 }
+
+function closeModal(){
+    var modalDiv = document.getElementById("modalDiv");
+        var div = document.getElementById("modalInnerDiv");
+        if(div){
+            div.parentNode.removeChild(div);
+        }
+    modalDiv.style.display = "none";
+}
+
 function submitTask(){
     clearLabels();
-    var div = document.getElementById("modalInnerDiv");
     var taskName = document.getElementById("taskName").value;
     var taskDesc = document.getElementById("descName").value;
     var person = document.getElementById("assignName").value;
@@ -85,7 +98,8 @@ function submitTask(){
     var flag = processForm(taskName,taskDesc,taskPrio);
     if(flag){
         var date = new Date();
-        var time = formatedTime(date);  /* FEATURE: {Object Concepts} */
+         /* FEATURE: {Object Concepts} */
+        var time = formatedTime(date);
         var obj = {
             taskName:taskName,
             taskDesc:taskDesc,
@@ -95,89 +109,21 @@ function submitTask(){
             finishedOn:"Not Finished!",
             status:"todo"
         }
-        if(div){
-          closeModal();
-        }
+        closeModal();
         console.log("Created Assignment details are:");
         console.log(obj);
         taskList.push(obj);
         taskID = taskID+1;
-        lock = true;
-        todoNewtask(taskID-1);    /* Navigated to next js page. */
+        todoNewtask(taskID-1);  /* Navigated to next js page. */
     }
     else{
         console.log("Warning: All fields are required!!");
     }
 }
-function formatedTime(date){
-    var hrs = date.getHours();
-    var mnt = date.getMinutes();
-    var sec = date.getSeconds();
-    var dd = date.getDate();
-    var mm = date.getMonth()+1;
-    var yy = date.getFullYear();
-    if(dd<10){
-        dd = '0'+dd;
-    }
-    if(mm<10){
-        mm = '0'+mm;
-    }
-    var obj = {
-        dd:dd,
-        mm:mm,
-        yyyy:yy,
-        hours:hrs,
-        minutes:mnt,
-        seconds:sec
-    }
-    return obj;
-}
-function processForm(name,desc,prio){
-    var status = true;
-    var reqName = document.createTextNode("Enter the name of the Assignment!");
-    var reqDesc = document.createTextNode("Enter the description of the Assignment!");
-    if(name === ""){
-        console.log("Name of the Task is not entered.");
-        var reqLabel = document.createElement("label");
-        reqLabel.style.color = "red";
-        reqLabel.appendChild(reqName);
-        reqLabel.id = "noName";
-        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("descLabel"));
-        status = false;
-    }
-    if(desc === ""){
-        console.log("Description of the Task is not entered.");
-        var reqLabel = document.createElement("label");
-        reqLabel.style.color = "red";
-        reqLabel.appendChild(reqDesc);
-        reqLabel.id = "noDesc";
-        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("assignLabel"));
-        status = false;
-    }
-    if(isNaN(prio)){
-        console.log("The Task priority isn't assigned yet.");
-        var reqLabel = document.createElement("label");
-        reqLabel.style.color = "red";
-        var reqPrio = document.createTextNode("Priority of can't be empty!");
-        reqLabel.appendChild(reqPrio);
-        reqLabel.id = "noPrio";
-        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
-        status = false;
-    }
-    if(prio<=0){
-        console.log("The Task priority is invalid.");
-        var reqLabel = document.createElement("label");
-        reqLabel.style.color = "red";
-        var reqPrio = document.createTextNode("Assign valid priority!");
-        reqLabel.appendChild(reqPrio);
-        reqLabel.id = "invalidPrio";
-        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
-        status = false;
-    }
-    return status;
-}
+
 function clearLabels(){
-    var reqLabel = document.getElementById("noName");
+    var reqLabel;
+    reqLabel = document.getElementById("noName");
     if(reqLabel){
         reqLabel.parentNode.removeChild(reqLabel);
     }
@@ -194,6 +140,82 @@ function clearLabels(){
         reqLabel.parentNode.removeChild(reqLabel);
     }
 }
+
+function processForm(name,desc,prio){
+    function createLabel(){
+        var reqLabel = document.createElement("label");
+        reqLabel.style.color = "red";
+        return reqLabel;
+    }
+    var status = true;
+    if(name === ""){
+        console.log("Name of the Task is not entered.");
+        var reqName = document.createTextNode("Enter the name of the Assignment!");
+        var reqLabel = createLabel();
+        reqLabel.id = "noName";
+        reqLabel.appendChild(reqName);
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("descLabel"));
+        status = false;
+    }
+    if(desc === ""){
+        console.log("Description of the Task is not entered.");
+        var reqDesc = document.createTextNode("Enter the description of the Assignment!");
+        var reqLabel = createLabel();
+        reqLabel.id = "noDesc";
+        reqLabel.appendChild(reqDesc);
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("assignLabel"));
+        status = false;
+    }
+    if(isNaN(prio)){
+        console.log("The Task priority isn't assigned yet.");
+        var reqPrio = document.createTextNode("Priority can't be empty!");
+        var reqLabel = createLabel();
+        reqLabel.id = "noPrio";
+        reqLabel.appendChild(reqPrio);
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
+        status = false;
+    }
+    if(prio <= 0){
+        console.log("The Task priority is invalid.");
+        if(prio == 0){
+            var reqPrio = document.createTextNode("Priority can't be zero!");
+        }
+        else{
+            var reqPrio = document.createTextNode("Priority can't be negative!");
+        }
+        var reqLabel = createLabel();
+        reqLabel.id = "invalidPrio";
+        reqLabel.appendChild(reqPrio);
+        document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
+        status = false;
+    }
+    return status;
+}
+
+function formatedTime(date){
+    var hrs = date.getHours();
+    var mnt = date.getMinutes();
+    var sec = date.getSeconds();
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yy = date.getFullYear();
+    if(dd < 10){
+        dd = '0'+dd;
+    }
+    if(mm < 10){
+        mm = '0'+mm;
+    }
+    var obj = {
+        dd:dd,
+        mm:mm,
+        yyyy:yy,
+        hours:hrs,
+        minutes:mnt,
+        seconds:sec
+    };
+    return obj;
+}
+
 window.onclick = function(event){
     if(event.target.id == "modalDiv"){
         closeModal();

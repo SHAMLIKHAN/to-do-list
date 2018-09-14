@@ -1,8 +1,4 @@
 var player;
-function dragStart(event){
-    player = event.target.parentNode.id;
-    event.dataTransfer.setData("Text", event.target.id);
-}
 function allowDrop(event){
     event.preventDefault();
 }

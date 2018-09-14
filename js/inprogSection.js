@@ -1,7 +1,23 @@
+function beginTask(id){
+    /* FEATURE: {Conditional Operator} */
+    var id = (this.id)? (this.id).charAt(0) : id;
+
+    /* Here the corresponding div in the todo section will be deleted. */
+    if(isNaN(id) === false){
+        var div = document.getElementById(id);
+        if(div){
+            div.parentNode.removeChild(div);
+        }
+        taskList[id].status = "inprogress";
+        console.log("Status of the assignment with id "+id+" is changed to 'inprogress'");
+        inprogressNewTask(id);
+    }
+}
+
 function inprogressNewTask(id){
     console.log("@ inprogress Section!!!");
     var obj = taskList[id];
-    var appendInProg;
+    var append;  /* To know whether the div is to be appendable or not! */
     var div = document.createElement("div");
         var heading = document.createElement("block");
             var btn = document.createElement("block");
@@ -10,17 +26,18 @@ function inprogressNewTask(id){
             btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
             btn.onclick = editTask;
             btn.addEventListener("mouseover",function(event){
-                var idHover = event.target.id;
+                var hoverID = event.target.id;
                 try{
-                    document.getElementById(idHover).style.cursor = "pointer";
+                    document.getElementById(hoverID).style.cursor = "pointer";
                 }catch(e){}
             });
+
             var name = document.createElement("block");
             name.id = id+"name";
             name.innerHTML = obj.taskName;
             name.onclick = toggleDiv;
-        heading.appendChild(btn);
         heading.appendChild(name);
+        heading.appendChild(btn);
         heading.id = id+"heading";
     div.appendChild(heading);
 
@@ -50,36 +67,21 @@ function inprogressNewTask(id){
     }
     /* Sorting based on Priority */
     else{
-        appendInProg = false;
+        append = false;
         var pos = document.getElementById("inprogressHead").nextElementSibling.id;
         var current = document.getElementById(pos);
         while(taskList[pos].taskPrio < taskList[id].taskPrio){
-            if(document.getElementById(pos).nextElementSibling==null){
+            if(document.getElementById(pos).nextElementSibling == null){
                 document.getElementById("inprogress").appendChild(div);
-                appendInProg = true;
+                append = true;
                 break;
             }
             pos = document.getElementById(pos).nextElementSibling.id;
             current = document.getElementById(pos);
         }
-        if(appendInProg===false){
+        if(append === false){
             document.getElementById("inprogress").insertBefore(div,current);
         }
     }
     /* Sorting ends here! */
-}
-function finishTask(id){
-    var id = (this.id)? (this.id).charAt(0): id;
-    closeModal();
-
-    var div = document.getElementById(id);
-    if(div){
-        div.parentNode.removeChild(div);
-    }
-    var date = new Date();
-    var time = formatedTime(date);
-    taskList[id].status = "done";
-    taskList[id].finishedOn = time;
-    console.log("Status of the assignment with id "+id+" is changed to 'done'");
-    doneNewTask(id);  /* Navigated to next js page */
 }

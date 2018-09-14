@@ -1,16 +1,6 @@
 #user{
     float: right;
 }
-#input-box input,label{
-    width: 100%;
-    display: block;
-    padding: 10px 10px;
-}
-#input-box input[type="button"]{
-    margin-top: 10px;
-    background-color: #ccc;
-    font-family: "Times New Roman",Times,sans-serif;
-}
 #todo div{
     width: 100%;
     padding: 10px 10px;
