@@ -1,6 +1,6 @@
 var taskID = 0;
 
-/* FEATURE: {Array Concepts} */
+/* feature: {Array Concepts} */
 var taskList = [];
 var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
 
@@ -41,7 +41,7 @@ function addNewTask() {
             assignName.setAttribute("list","employees");
             assignName.id = "assignName";
 
-            /* Adding Autocomletion of People */
+            /* adding Autocomletion of People */
             var dataList = document.createElement("datalist");
             dataList.id = "employees";
             people.map(function(item) {
@@ -50,7 +50,7 @@ function addNewTask() {
                 dataList.appendChild(option);
                 return item;
             });
-            /* Autocompletion ends here! */
+            /* autocompletion ends here! */
 
             var prioLabel = document.createElement("label");
             var prioLabelName = document.createTextNode("Assignment Priority:");
@@ -100,23 +100,23 @@ function submitTask() {
     var flag = processForm(taskName,taskDesc,taskPrio);
     if(flag) {
         var date = new Date();
-         /* FEATURE: {Object Concepts} */
+         /* feature: {Object Concepts} */
         var time = formatedTime(date);
         var obj = {
-            taskName:taskName,
-            taskDesc:taskDesc,
-            taskAssign:person,
-            taskPrio:taskPrio,
-            createdOn:time,
-            finishedOn:"Not Finished!",
-            status:"todo"
+            'taskName':taskName,
+            'taskDesc':taskDesc,
+            'taskAssign':person,
+            'taskPrio':taskPrio,
+            'createdOn':time,
+            'finishedOn':"Not Finished!",
+            'status':"todo"
         };
         closeModal();
         console.log("Created Assignment details are:");
         console.log(obj);
         taskList.push(obj);
         taskID += 1;
-        todoNewtask(taskID-1);  /* Navigated to next js page. */
+        todoNewtask(taskID-1);  /* navigated to next js page. */
     }
     else{
         console.log("Warning: All fields are required!!");
@@ -150,10 +150,11 @@ function processForm(name,desc,prio) {
         return reqLabel;
     }
     var status = true;
+    var reqLabel, reqPrio;
     if(name === "") {
         console.log("Name of the Task is not entered.");
         var reqName = document.createTextNode("Enter the name of the Assignment!");
-        var reqLabel = createLabel();
+        reqLabel = createLabel();
         reqLabel.id = "noName";
         reqLabel.appendChild(reqName);
         document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("descLabel"));
@@ -162,7 +163,7 @@ function processForm(name,desc,prio) {
     if(desc === "") {
         console.log("Description of the Task is not entered.");
         var reqDesc = document.createTextNode("Enter the description of the Assignment!");
-        var reqLabel = createLabel();
+        reqLabel = createLabel();
         reqLabel.id = "noDesc";
         reqLabel.appendChild(reqDesc);
         document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("assignLabel"));
@@ -170,8 +171,8 @@ function processForm(name,desc,prio) {
     }
     if(isNaN(prio)) {
         console.log("The Task priority isn't assigned yet.");
-        var reqPrio = document.createTextNode("Priority can't be empty!");
-        var reqLabel = createLabel();
+        reqPrio = document.createTextNode("Priority can't be empty!");
+        reqLabel = createLabel();
         reqLabel.id = "noPrio";
         reqLabel.appendChild(reqPrio);
         document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
@@ -180,12 +181,12 @@ function processForm(name,desc,prio) {
     if(prio <= 0) {
         console.log("The Task priority is invalid.");
         if(prio == 0) {
-            var reqPrio = document.createTextNode("Priority can't be zero!");
+            reqPrio = document.createTextNode("Priority can't be zero!");
         }
         else{
-            var reqPrio = document.createTextNode("Priority can't be negative!");
+            reqPrio = document.createTextNode("Priority can't be negative!");
         }
-        var reqLabel = createLabel();
+        reqLabel = createLabel();
         reqLabel.id = "invalidPrio";
         reqLabel.appendChild(reqPrio);
         document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById("btnSubmit"));
@@ -208,12 +209,12 @@ function formatedTime(date) {
         mm = '0'+mm;
     }
     var obj = {
-        dd:dd,
-        mm:mm,
-        yyyy:yy,
-        hours:hrs,
-        minutes:mnt,
-        seconds:sec
+        'dd':dd,
+        'mm':mm,
+        'yyyy':yy,
+        'hours':hrs,
+        'minutes':mnt,
+        'seconds':sec
     };
     return obj;
 }

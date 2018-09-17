@@ -1,10 +1,13 @@
-function beginTask(id) {
-    /* FEATURE: {Conditional Operator} */
-    var id = (this.id)
-        ? (this.id).charAt(0)
-        : id;
-
-    /* Here the corresponding div in the todo section will be deleted. */
+function beginTask(ID) {
+    /* feature: {Conditional Operator} */
+    var id;
+    if(this.id) {
+        id = (this.id).charAt(0);
+    }
+    else {
+        id = ID;
+    }
+    /* here the corresponding div in the todo section will be deleted. */
     if(isNaN(id) === false) {
         var div = document.getElementById(id);
         if(div) {
@@ -19,7 +22,7 @@ function beginTask(id) {
 function inprogressNewTask(id) {
     console.log("@ inprogress Section!!!");
     var obj = taskList[id];
-    var append;  /* To know whether the div is to be appendable or not! */
+    var append;  /* to know whether the div is to be appendable or not! */
     var div = document.createElement("div");
         var heading = document.createElement("block");
             var btn = document.createElement("block");
@@ -31,7 +34,9 @@ function inprogressNewTask(id) {
                 var hoverID = event.target.id;
                 try {
                     document.getElementById(hoverID).style.cursor = "pointer";
-                }catch(e) {}
+                }catch(e) {
+                    console.log(e);
+                }
             });
 
             var name = document.createElement("block");
@@ -43,7 +48,7 @@ function inprogressNewTask(id) {
         heading.id = id+"heading";
     div.appendChild(heading);
 
-    /* Inner Content */
+    /* inner Content */
         var block = document.createElement("block");
         var dt = getDateTime(obj.createdOn);
         var data = "<p>Description: "+obj.taskDesc+" </p>"+
@@ -54,7 +59,7 @@ function inprogressNewTask(id) {
         block.innerHTML = data;
         block.style.display = "none";
     div.appendChild(block);
-    /* Inner Content ends here! */
+    /* inner Content ends here! */
 
     div.id = id;
     div.draggable = true;
@@ -67,7 +72,7 @@ function inprogressNewTask(id) {
     if(divCount==1) {
         document.getElementById("inprogress").appendChild(div);
     }
-    /* Sorting based on Priority */
+    /* sorting based on Priority */
     else {
         append = false;
         var pos = document.getElementById("inprogressHead").nextElementSibling.id;
@@ -85,5 +90,5 @@ function inprogressNewTask(id) {
             document.getElementById("inprogress").insertBefore(div,current);
         }
     }
-    /* Sorting ends here! */
+    /* sorting ends here! */
 }

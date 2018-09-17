@@ -1,8 +1,12 @@
-function finishTask(id) {
-    var id = (this.id)
-    ? (this.id).charAt(0)
-    : id;
-    /* The corresponding div in the inprogress section will be deleted. */
+function finishTask(ID) {
+    var id;
+    if(this.id) {
+        id = (this.id).charAt(0);
+    }
+    else {
+        id = ID;
+    }
+    /* the corresponding div in the inprogress section will be deleted. */
     var div = document.getElementById(id);
     if(div) {
         div.parentNode.removeChild(div);
@@ -29,7 +33,7 @@ function doneNewTask(id) {
         heading.id = id+"heading";
     div.appendChild(heading);
 
-    /* Inner Content */
+    /* inner Content */
         var block = document.createElement("block");
         var dtCreated = getDateTime(obj.createdOn);
         var dtFinished = getDateTime(obj.finishedOn);
@@ -42,6 +46,6 @@ function doneNewTask(id) {
         block.innerHTML = data;
         block.style.display = "none";
     div.appendChild(block);
-    /* Inner Content ends here! */
+    /* inner Content ends here! */
     document.getElementById("done").appendChild(div);
 }

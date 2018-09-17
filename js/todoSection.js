@@ -1,7 +1,7 @@
 function todoNewtask(id) {
     console.log("@ todo Section!!!");
     var obj = taskList[id];
-    var append; /* To know whether the div is to be appendable or not! */
+    var append; /* to know whether the div is to be appendable or not! */
 
     var div = document.createElement("div");
         var heading = document.createElement("block");
@@ -15,12 +15,14 @@ function todoNewtask(id) {
             btn.style.float = "right";
             btn.innerHTML = "<i class='material-icons'>&#xe254;</i>";
             btn.onclick = editTask;
-            /* FEATURE: {try-catch} */
+            /* feature: {try-catch} */
             btn.addEventListener("mouseover",function(event) {
                 var hoverID = event.target.id;
                 try {
                     document.getElementById(hoverID).style.cursor = "pointer";
-                }catch(e) {}
+                }catch(e) {
+                    console.log(e);
+                }
             });
         heading.appendChild(name);
         heading.appendChild(btn);
@@ -36,7 +38,7 @@ function todoNewtask(id) {
     });
     div.id = id;
 
-    /* Inner Content */
+    /* inner Content */
         var block = document.createElement("block");
         var dt = getDateTime(obj.createdOn);
         var data = "<p>Description: "+obj.taskDesc+" </p>"+
@@ -47,13 +49,13 @@ function todoNewtask(id) {
         block.innerHTML = data;
         block.style.display = "none";
     div.appendChild(block);
-    /* Inner Content ends here! */
+    /* inner Content ends here! */
 
     var divCount = document.getElementById("todo").childElementCount;
     if(divCount==1) {
         document.getElementById("todo").appendChild(div);
     }
-    /* Sorting based on Priority */
+    /* sorting based on Priority */
     else {
         append = false;
         var pos = document.getElementById("todoHead").nextElementSibling.id;
@@ -71,19 +73,18 @@ function todoNewtask(id) {
             document.getElementById("todo").insertBefore(div,current);
         }
     }
-    /* Sorting ends here! */
+    /* sorting ends here! */
 }
 
 function toggleDiv() {
-    var id = this.id;
+    var [id, idBlock] = [(this.id),(this.id).charAt(0)+"details"];  /* object destructuring. */
     document.getElementById(id).style.fontWeight = "bold";
-    id = (this.id).charAt(0)+"details";
-    if(document.getElementById(id).style.display === "none") {
-        document.getElementById(id).style.display = "block";
+    if(document.getElementById(idBlock).style.display === "none") {
+        document.getElementById(idBlock).style.display = "block";
     }
     else {
-        document.getElementById(this.id).style.fontWeight = "normal";
-        document.getElementById(id).style.display = "none";
+        document.getElementById(id).style.fontWeight = "normal";
+        document.getElementById(idBlock).style.display = "none";
     }
 }
 
@@ -110,7 +111,7 @@ function editTask() {
             assignName.setAttribute("list","employees");
             assignName.defaultValue = obj.taskAssign;
 
-            /* Adding Autocomletion of People */
+            /* adding Autocomletion of People */
             var dataList = document.createElement("datalist");
             dataList.id = "employees";
             for(let i=0; i<people.length; i++) {
@@ -118,7 +119,7 @@ function editTask() {
                 option.value = people[i];
                 dataList.appendChild(option);
             }
-            /* Autocompletion ends here! */
+            /* autocompletion ends here! */
 
             var prioLabel = document.createElement("label");
             var prioLabelName = document.createTextNode("Assignment Priority:");
@@ -169,7 +170,7 @@ function saveTask() {
             todoNewtask(id);
         }
         else {
-            beginTask(id); /* Navigated to next js page. */
+            beginTask(id); /* navigated to next js page. */
         }
     }
 }
@@ -187,10 +188,11 @@ function validatePrio(id,prio) {
         return reqLabel;
     }
     var status = true;
+    var reqLabel, reqPrio;
     if(isNaN(prio)) {
         console.log("The Task priority isn't assigned yet.");
-        var reqPrio = document.createTextNode("Priority can't be empty!");
-        var reqLabel = createLabel();
+        reqPrio = document.createTextNode("Priority can't be empty!");
+        reqLabel = createLabel();
         reqLabel.id = "noPrio";
         reqLabel.appendChild(reqPrio);
         document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById(id+"btnSave"));
@@ -199,12 +201,12 @@ function validatePrio(id,prio) {
     if(prio <= 0) {
         console.log("The Task priority is invalid.");
         if(prio == 0) {
-            var reqPrio = document.createTextNode("Priority can't be zero!");
+            reqPrio = document.createTextNode("Priority can't be zero!");
         }
         else {
-            var reqPrio = document.createTextNode("Priority can't be negative!");
+            reqPrio = document.createTextNode("Priority can't be negative!");
         }
-        var reqLabel = createLabel();
+        reqLabel = createLabel();
         reqLabel.id = "invalidPrio";
         reqLabel.appendChild(reqPrio);
         document.getElementById("modalInnerDiv").insertBefore(reqLabel,document.getElementById(id+"btnSave"));

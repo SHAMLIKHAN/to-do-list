@@ -21,13 +21,13 @@
         "arrow-body-style": "error",
         "arrow-parens": "error",
         "arrow-spacing": "error",
-        "block-scoped-var": "warn",
+        "block-scoped-var": "error",
         "block-spacing": "error",
         "brace-style": "off",
         "callback-return": "error",
         "camelcase": "off",
         "capitalized-comments": [
-            "off",
+            "error",
             "never"
         ],
         "class-methods-use-this": "error",
@@ -113,7 +113,7 @@
         "no-div-regex": "error",
         "no-duplicate-imports": "error",
         "no-else-return": "off",
-        "no-empty": "warn",
+        "no-empty": "error",
         "no-empty-function": "error",
         "no-eq-null": "error",
         "no-eval": "error",
@@ -167,7 +167,7 @@
         "no-process-exit": "error",
         "no-proto": "error",
         "no-prototype-builtins": "error",
-        "no-redeclare": "warn",
+        "no-redeclare": "error",
         "no-restricted-globals": "error",
         "no-restricted-imports": "error",
         "no-restricted-modules": "error",
@@ -184,7 +184,7 @@
         "no-sync": "error",
         "no-tabs": "error",
         "no-template-curly-in-string": "error",
-        "no-ternary": "warn",
+        "no-ternary": "error",
         "no-throw-literal": "error",
         "no-trailing-spaces": "error",
         "no-undef": "warn",
@@ -228,7 +228,7 @@
         "padding-line-between-statements": "error",
         "prefer-arrow-callback": "off",
         "prefer-const": "off",
-        "prefer-destructuring": "warn",
+        "prefer-destructuring": "error",
         "prefer-numeric-literals": "error",
         "prefer-object-spread": "error",
         "prefer-promise-reject-errors": "error",
@@ -240,8 +240,7 @@
         "quotes": [
 		"off",
 		"double"
-	],
-        "quote-props": "off",
+	    ],
         "radix": [
             "error",
             "as-needed"
