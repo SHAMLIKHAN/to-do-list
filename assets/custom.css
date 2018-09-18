@@ -1,4 +1,4 @@
-#user{
+#user, #logout{
     float: right;
 }
 #todo div{
@@ -44,4 +44,10 @@
     #inprogress,#done{
         border-left: 1px solid #969696;
     }
+}
+#btnSubmit{
+    font-weight: bold;
+}
+.required{
+    color:red;
 }

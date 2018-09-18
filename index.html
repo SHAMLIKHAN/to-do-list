@@ -10,9 +10,10 @@
         <script type="text/javascript" src="js/global.js"></script>
     </head>
     <body onload="getUser()">
-        <nav>
+        <nav id="nav" class="nav">
             <a>Home </a>
             <a>Members</a>
+            <a id="logout" class="icon" onclick="logout()"><i class="material-icons">lock</i></a>
             <a id="user">User</a>
         </nav>
         <div class="row" id="parent">

@@ -1,5 +1,4 @@
 var taskID = 0;
-
 /* feature: {Array Concepts} */
 var taskList = [];
 var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
@@ -63,7 +62,6 @@ function addNewTask() {
             btn.id = "btnSubmit";
             btn.value = "Submit";
             btn.type = "button";
-            btn.style.fontWeight = "bold";
             btn.onclick= submitTask;
 
         div.id = "modalInnerDiv";
@@ -146,7 +144,7 @@ function clearLabels() {
 function processForm(name,desc,prio) {
     function createLabel() {
         var reqLabel = document.createElement("label");
-        reqLabel.style.color = "red";
+        reqLabel.className = "required";
         return reqLabel;
     }
     var status = true;

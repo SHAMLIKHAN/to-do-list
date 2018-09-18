@@ -100,4 +100,9 @@ button:hover{
         height: auto;
         min-height: 0px;
     }
+    nav a:not(:first-child) {display: none;}
+    nav a.icon {
+        float: right;
+        display: block;
+    }
 }
