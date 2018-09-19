@@ -13,15 +13,15 @@ function finishTask(ID) {
     }
     var date = new Date();
     var time = formatedTime(date);
-    taskList[id].status = "done";
-    taskList[id].finishedOn = time;
+    taskObj.getTask(id).status = "done";
+    taskObj.getTask(id).finishedOn = time;
     console.log("Status of the assignment with id "+id+" is changed to 'done'");
     doneNewTask(id);
 }
 
 function doneNewTask(id) {
     console.log("@ done Section!!!");
-    var obj = taskList[id];
+    var obj = taskObj.getTask(id);
     var div = document.createElement("div");
     div.id = id;
         var heading = document.createElement("block");

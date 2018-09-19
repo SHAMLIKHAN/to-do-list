@@ -1,6 +1,12 @@
 #user, #logout{
     float: right;
 }
+#btnSubmit{
+    font-weight: bold;
+}
+.required{
+    color:red;
+}
 #todo div{
     width: 100%;
     padding: 10px 10px;
@@ -44,10 +50,4 @@
     #inprogress,#done{
         border-left: 1px solid #969696;
     }
-}
-#btnSubmit{
-    font-weight: bold;
-}
-.required{
-    color:red;
 }

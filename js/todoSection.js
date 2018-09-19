@@ -1,6 +1,6 @@
 function todoNewtask(id) {
     console.log("@ todo Section!!!");
-    var obj = taskList[id];
+    var obj = taskObj.getTask(id);
     var append; /* to know whether the div is to be appendable or not! */
 
     var div = document.createElement("div");
@@ -31,7 +31,7 @@ function todoNewtask(id) {
     div.draggable = true;
     div.addEventListener("dragstart",function(event) {
         player = event.target.parentNode.id;
-        if(taskList[parseInt(event.target.id)].taskAssign === "") {
+        if(taskObj.getTask(parseInt(event.target.id)).taskAssign === "") {
             console.log("The task isn't assigned yet!");
         }
         event.dataTransfer.setData("Text", event.target.id);
@@ -60,7 +60,7 @@ function todoNewtask(id) {
         append = false;
         var pos = document.getElementById("todoHead").nextElementSibling.id;
         var current = document.getElementById(pos);
-        while(taskList[pos].taskPrio < taskList[id].taskPrio) {
+        while(taskObj.getTask(pos).taskPrio < taskObj.getTask(id).taskPrio) {
             if(document.getElementById(pos).nextElementSibling === null) {
                 append = true;
                 document.getElementById("todo").appendChild(div);
@@ -90,7 +90,7 @@ function toggleDiv() {
 
 function editTask() {
     var id = (this.id).charAt(0);
-    var obj = taskList[id];
+    var obj = taskObj.getTask(id);
     var modalDiv = document.getElementById("modalDiv");
         var div = document.createElement("div");
         div.id = "modalInnerDiv";
@@ -114,11 +114,13 @@ function editTask() {
             /* adding Autocomletion of People */
             var dataList = document.createElement("datalist");
             dataList.id = "employees";
-            for(let i=0; i<people.length; i++) {
+            var assignee = getPeople();
+            assignee.map(function(item) {
                 var option = document.createElement("option");
-                option.value = people[i];
+                option.value = item;
                 dataList.appendChild(option);
-            }
+                return item;
+            });
             /* autocompletion ends here! */
 
             var prioLabel = document.createElement("label");
@@ -157,9 +159,9 @@ function saveTask() {
     if(flag) {
         var date = new Date();
         var time = formatedTime(date);
-        taskList[id].taskPrio=prio;
-        taskList[id].taskAssign=person;
-        taskList[id].createdOn=time;
+        taskObj.getTask(id).taskPrio=prio;
+        taskObj.getTask(id).taskAssign=person;
+        taskObj.getTask(id).createdOn=time;
         console.log("Assignment with id "+id+" is edited!");
         closeModal();
         var div = document.getElementById(id);

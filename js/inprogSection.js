@@ -13,7 +13,7 @@ function beginTask(ID) {
         if(div) {
             div.parentNode.removeChild(div);
         }
-        taskList[id].status = "inprogress";
+        taskObj.getTask(id).status = "inprogress";
         console.log("Status of the assignment with id "+id+" is changed to 'inprogress'");
         inprogressNewTask(id);
     }
@@ -21,7 +21,7 @@ function beginTask(ID) {
 
 function inprogressNewTask(id) {
     console.log("@ inprogress Section!!!");
-    var obj = taskList[id];
+    var obj = taskObj.getTask(id);
     var append;  /* to know whether the div is to be appendable or not! */
     var div = document.createElement("div");
         var heading = document.createElement("block");
@@ -77,7 +77,7 @@ function inprogressNewTask(id) {
         append = false;
         var pos = document.getElementById("inprogressHead").nextElementSibling.id;
         var current = document.getElementById(pos);
-        while(taskList[pos].taskPrio < taskList[id].taskPrio) {
+        while(taskObj.getTask(pos).taskPrio < taskObj.getTask(id).taskPrio) {
             if(document.getElementById(pos).nextElementSibling === null) {
                 document.getElementById("inprogress").appendChild(div);
                 append = true;

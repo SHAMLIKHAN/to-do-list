@@ -1,7 +1,30 @@
-var taskID = 0;
+var updateTaskID = (function(){
+    var taskID = 0;
+    return function(){
+        taskID+=1;
+        return taskID;
+    }
+})();
+
+/* closure concept is used with IIFE */
+var taskObj = (function(){
+    var taskList = [];
+    return {
+        pushTask: function(item){
+            taskList.push(item);
+        },
+        getTask: function(id){
+            return taskList[id];
+        }
+    };
+})();
 /* feature: {Array Concepts} */
-var taskList = [];
-var people = ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
+
+var getPeople = (function(){
+    return function(){
+            return ['ShamliKhan','Angith','Suraj','Amal','Wasim Akram'];
+    };
+})();
 
 function addNewTask() {
     console.log("Button is clicked to create a new assignment.");
@@ -43,7 +66,8 @@ function addNewTask() {
             /* adding Autocomletion of People */
             var dataList = document.createElement("datalist");
             dataList.id = "employees";
-            people.map(function(item) {
+            var assignee = getPeople();
+            assignee.map(function(item) {
                 var option = document.createElement("option");
                 option.value = item;
                 dataList.appendChild(option);
@@ -112,8 +136,8 @@ function submitTask() {
         closeModal();
         console.log("Created Assignment details are:");
         console.log(obj);
-        taskList.push(obj);
-        taskID += 1;
+        taskObj.pushTask(obj);
+        var taskID = updateTaskID();
         todoNewtask(taskID-1);  /* navigated to next js page. */
     }
     else{
@@ -217,8 +241,10 @@ function formatedTime(date) {
     return obj;
 }
 
-window.onclick = function(event) {
-    if(event.target.id == "modalDiv") {
-        closeModal();
+window.onclick = (function() {
+    return function(event){
+        if(event.target.id == "modalDiv") {
+            closeModal();
+        }
     }
-};
+})();
